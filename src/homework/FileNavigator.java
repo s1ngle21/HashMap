@@ -2,9 +2,10 @@ package homework;
 
 import java.nio.file.InvalidPathException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class FileNavigator {
-    private HashMap<String, List<FileData>> files;
+    private Map<String, List<FileData>> files;
 
     public FileNavigator() {
         this.files = new HashMap<>();
@@ -24,10 +25,7 @@ public class FileNavigator {
     }
 
     public List<FileData> find(String filePath) {
-        if (files.containsKey(filePath)) {
-            return files.get(filePath);
-        }
-        return new ArrayList<>();
+        return files.get(filePath);
     }
 
     public List<FileData> filterBySize(long fileSize) {
@@ -49,16 +47,11 @@ public class FileNavigator {
     }
 
     public List<FileData> sortBySize() {
-        TreeMap<Long, List<FileData>> map = new TreeMap<>();
-        for (List<FileData> fileList : files.values()) {
-            for (FileData fileData : fileList) {
-                map.put(fileData.getFileSize(), fileList);
-            }
-        }
         List<FileData> sortedList = new ArrayList<>();
-        for (List<FileData> fileList : map.values()) {
-            sortedList.addAll(fileList);
+        for (List<FileData> fileDataList : this.files.values()) {
+            sortedList.addAll(fileDataList);
         }
+        Collections.sort(sortedList, Comparator.comparingLong(FileData::getFileSize));
         return sortedList;
     }
 

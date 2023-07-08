@@ -1,15 +1,41 @@
 package homework;
 
+import java.util.Objects;
+
 public class FileData {
 
     private String fileName;
-    private long fileSize;
+    private Long fileSize;
     private String filePath;
 
 
-    public FileData(String fileName, long fileSize, String filePath) {
+    public FileData(String fileName, Long fileSize, String filePath) {
         this.fileName = fileName;
         this.fileSize = fileSize;
+        this.filePath = filePath;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public Long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 
@@ -22,27 +48,16 @@ public class FileData {
                 "}";
     }
 
-    public String getFileName() {
-        return fileName;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FileData fileData = (FileData) o;
+        return fileSize == fileData.fileSize && Objects.equals(fileName, fileData.fileName) && Objects.equals(filePath, fileData.filePath);
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public long getFileSize() {
-        return fileSize;
-    }
-
-    public void setFileSize(long fileSize) {
-        this.fileSize = fileSize;
-    }
-
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    @Override
+    public int hashCode() {
+        return Objects.hash(fileName, fileSize, filePath);
     }
 }
